@@ -1,12 +1,12 @@
 package org.example;
 
-import com.github.kwhat.jnativehook.GlobalScreen;
-import com.github.kwhat.jnativehook.NativeHookException;
-import com.github.kwhat.jnativehook.dispatcher.SwingDispatchService;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseMotionListener;
+import org.example.common.Config;
 import org.example.model.DayTimeModel;
+import org.example.view.OverviewForm;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,14 +24,7 @@ public class JustOnTime implements NativeMouseMotionListener {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-    private static final String outputPath = "mouse_record";
-
-    public static void main(String[] args) throws NativeHookException {
-        GlobalScreen.setEventDispatcher(new SwingDispatchService());
-        JustOnTime justOnTime = new JustOnTime();
-        GlobalScreen.registerNativeHook();
-        GlobalScreen.addNativeMouseMotionListener(justOnTime);
-    }
+    private static final String outputPre = Config.RECORD_ROOT_PATH + File.separator + "mouse_record";
 
     public void nativeMouseMoved(NativeMouseEvent nativeEvent) {
         // 首先判断上一次更新是否满一分钟了
@@ -50,9 +43,11 @@ public class JustOnTime implements NativeMouseMotionListener {
             timeMap.put(today, dayTimeModel);
         }
         writeRecord(timeMap.get(today));
+        OverviewForm.getInstance().updateInfo(timeMap.get(today));
     }
 
     private void writeRecord(DayTimeModel dayTimeModel) {
+        String outputPath = outputPre + dayTimeModel.getDate();
         final String message = dayTimeModel.toString() + "\n";
         try (FileWriter fileWriter = new FileWriter(outputPath, true)) {
             fileWriter.write(message);

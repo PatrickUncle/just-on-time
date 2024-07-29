@@ -23,7 +23,7 @@ public class Rule {
 
     public static Rule getInstance() {
         if (instance == null) {
-            return new Rule();
+            instance = new Rule();
         }
         return instance;
     }

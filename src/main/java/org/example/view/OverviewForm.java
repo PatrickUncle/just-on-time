@@ -1,7 +1,9 @@
 package org.example.view;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Getter;
-import org.example.model.DayTimeModel;
+import org.example.model.OverviewDataModel;
+import org.example.model.Rule;
 
 import javax.swing.*;
 
@@ -21,8 +23,8 @@ public class OverviewForm {
     private JLabel workingHourLackValue;
     private JLabel countingDayLabel;
     private JLabel countingDayValue;
-    private JLabel remainDayLabel;
     private JLabel remainDayValue;
+    private JLabel remainDayLabel;
     private JLabel countingRuleLabel;
     private JLabel countingRuleValue;
     private JScrollPane scrollPane;
@@ -34,9 +36,15 @@ public class OverviewForm {
         return overviewForm;
     }
 
-    public void updateInfo(DayTimeModel dayTimeModel){
-        overviewForm.getWorkingHourTotalValue().setText(dayTimeModel.getDate());
-        overviewForm.getWorkingHourOverValue().setText(dayTimeModel.getStartTime() + "");
-        overviewForm.getWorkingHourDayAvgValue().setText(dayTimeModel.getEndTime() + "");
+    public void updateInfo() {
+        Rule rule = Rule.getInstance();
+        OverviewDataModel overview = OverviewDataModel.getInstance();
+        overviewForm.getWorkingHourTotalValue().setText(overview.getTotal() + "");
+        overviewForm.getWorkingHourOverValue().setText(overview.getOver() + "");
+        overviewForm.getWorkingHourDayAvgValue().setText(overview.getAvg() + "");
+        overviewForm.getWorkingHourLackValue().setText("所欠工时");
+        overviewForm.getCountingDayValue().setText(overview.getDayCount() + "");
+        overviewForm.getRemainDayValue().setText(overview.getRemainDay() + "");
+        overviewForm.getCountingRuleValue().setText(JSON.toJSONString(rule));
     }
 }

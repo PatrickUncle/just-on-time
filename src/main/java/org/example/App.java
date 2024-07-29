@@ -29,6 +29,11 @@ public class App {
             recordPath.mkdirs();
         }
 
+        File dataPath = new File(Config.DATA_PATH);
+        if (!dataPath.exists()) {
+            dataPath.mkdirs();
+        }
+
         MainFrame mainFrame = MainFrame.getInstance();
 
         MyTimer.registerTimer();

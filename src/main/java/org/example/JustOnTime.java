@@ -6,15 +6,10 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseMotionListener;
 import org.example.common.Config;
 import org.example.common.CommonUtils;
 import org.example.model.DayTimeModel;
-import org.example.view.OverviewForm;
 
-import javax.rmi.CORBA.Util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -30,11 +25,11 @@ public class JustOnTime implements NativeMouseMotionListener {
 
     public void nativeMouseMoved(NativeMouseEvent nativeEvent) {
         // 首先判断上一次更新是否满一分钟了
-        long currentTimeMillis = System.currentTimeMillis();
-        if (currentTimeMillis - lastUpdateTime < 60000) {
+        long currentTimeSeconds = System.currentTimeMillis() / 1000;
+        if (currentTimeSeconds - lastUpdateTime < 60) {
             return;
         }
-        lastUpdateTime = currentTimeMillis / 1000;
+        lastUpdateTime = currentTimeSeconds;
         String today = getToday();
         if (timeMap.containsKey(today)) {
             // 代表已经存储过

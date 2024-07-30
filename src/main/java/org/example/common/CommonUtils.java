@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -141,7 +142,7 @@ public class CommonUtils {
             return 0;
         }
         // TODO 工时计算
-        long todayStart = LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() / 1000;
+        long todayStart = stringDateToTimestamp(dayTime.getDate());
         if (dayTime.getStartTime() == 0 || dayTime.getEndTime() == 0) {
             return 0;
         }
@@ -193,5 +194,14 @@ public class CommonUtils {
     public static Date getTodayDate() {
         Instant instant = LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
         return Date.from(instant);
+    }
+
+    public static long stringDateToTimestamp(String date) {
+        try {
+            return sdf.parse(date).getTime() / 1000;
+        } catch (ParseException e) {
+            System.out.println("parse error");
+        }
+        return 0;
     }
 }

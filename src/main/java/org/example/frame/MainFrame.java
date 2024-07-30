@@ -1,15 +1,12 @@
 package org.example.frame;
 
 
-import org.example.view.OverviewForm;
+import org.example.components.AppTabbedPane;
 
 import javax.swing.*;
 
 /**
- * Main Frame
- *
- * @author <a href="https://github.com/rememberber">RememBerBer</a>
- * @since 2021/11/08.
+ * 主窗口
  */
 public class MainFrame extends JFrame {
 
@@ -17,18 +14,19 @@ public class MainFrame extends JFrame {
 
     public static MainFrame getInstance() {
         if (instance == null) {
-            return new MainFrame();
+            instance = new MainFrame();
         }
         return instance;
     }
 
     private MainFrame() {
-        this.setTitle("hello a ");
-        this.setName("aaa");
+        this.setTitle("按时下班");
+        this.setName("按时下班");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300, 600);
-
-        this.setContentPane(OverviewForm.getInstance().getMainPanel());
+        AppTabbedPane appTabbedPane = AppTabbedPane.getInstance();
+        this.getRootPane().setJMenuBar(appTabbedPane);
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

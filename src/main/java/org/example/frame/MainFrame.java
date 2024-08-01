@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
         this.setTitle("按时下班");
         this.setName("按时下班");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 600);
+        this.setSize(300, 300);
         AppTabbedPane appTabbedPane = AppTabbedPane.getInstance();
         this.getRootPane().setJMenuBar(appTabbedPane);
         this.setVisible(true);

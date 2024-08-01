@@ -19,6 +19,8 @@ public class Rule {
     // 统计工时最晚时间（有可能会到达第二天凌晨）。 也代表着第二天能打上卡的最早时间
     private int end;
 
+    private int dayAvgTime;
+
     private static Rule instance;
 
     public static Rule getInstance() {
@@ -43,5 +45,8 @@ public class Rule {
         // 晚餐时间 18：00～18：30
         StartEndPair dinner = new StartEndPair(64800, 66600);
         this.excludedList.add(dinner);
+
+        // 日均工时
+        this.dayAvgTime = 8;
     }
 }

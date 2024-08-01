@@ -2,10 +2,13 @@ package org.example.view;
 
 import com.alibaba.fastjson.JSON;
 import lombok.Getter;
+import org.example.common.Config;
 import org.example.model.OverviewDataModel;
 import org.example.model.Rule;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.Vector;
 
 
 @Getter
@@ -25,9 +28,10 @@ public class OverviewForm {
     private JLabel countingDayValue;
     private JLabel remainDayValue;
     private JLabel remainDayLabel;
-    private JLabel countingRuleLabel;
-    private JLabel countingRuleValue;
+    private JLabel adviceBackHomeTimeLabel;
+    private JLabel adviceBackHomeTimeValue;
     private JScrollPane scrollPane;
+    private JTable dateTable;
 
     public static OverviewForm getInstance() {
         if (overviewForm == null) {
@@ -45,6 +49,24 @@ public class OverviewForm {
         overviewForm.getWorkingHourLackValue().setText("所欠工时");
         overviewForm.getCountingDayValue().setText(overview.getDayCount() + "");
         overviewForm.getRemainDayValue().setText(overview.getRemainDay() + "");
-        overviewForm.getCountingRuleValue().setText(JSON.toJSONString(rule));
+        overviewForm.getAdviceBackHomeTimeValue().setText("18:00");
     }
+
+    private OverviewForm() {
+        DefaultTableModel model = new DefaultTableModel(Config.dateColumns, 0);
+        this.dateTable.setModel(model);
+    }
+
+    public void updateDateList() {
+        DefaultTableModel model = (DefaultTableModel) this.dateTable.getModel();
+        Vector<Vector<Object>> rowData = new Vector<>();
+        Vector<Object> row = new Vector<>();
+        row.add("2024-07-31");
+        row.add("2024-07-31 10:00");
+        row.add("2024-07-31 18:00");
+        rowData.add(row);
+        model.setDataVector(rowData, Config.dateColumns);
+    }
+
+
 }

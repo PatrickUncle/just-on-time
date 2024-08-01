@@ -24,11 +24,8 @@ import java.util.stream.Collectors;
 
 public class CommonUtils {
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-    private static final SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyy-MM");
-
-    public static String formatDate(Date date) {
+    public static String formatDate(Date date, DateFormat format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format.getValue());
         return sdf.format(date);
     }
 
@@ -50,7 +47,7 @@ public class CommonUtils {
 
     public static List<String> getAllDayList() {
         return getAllDay().stream()
-                .map(item -> CommonUtils.formatDate(item.getTime()))
+                .map(item -> CommonUtils.formatDate(item.getTime(), DateFormat.YEAR_MONTH_DAY))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -58,19 +55,19 @@ public class CommonUtils {
         List<Calendar> allDay = getAllDay();
         return allDay.stream().
                 filter((item) -> item.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY && item.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)
-                .map((item) -> CommonUtils.formatDate(item.getTime()))
+                .map((item) -> CommonUtils.formatDate(item.getTime(), DateFormat.YEAR_MONTH_DAY))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static List<String> getRestingDay() {
         return getAllDay().stream().
                 filter((item) -> item.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || item.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-                .map((item) -> CommonUtils.formatDate(item.getTime()))
+                .map((item) -> CommonUtils.formatDate(item.getTime(), DateFormat.YEAR_MONTH_DAY))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static String getCurrentMonthDataFilePath() {
-        String month = yearMonthFormat.format(new Date());
+        String month = formatDate(new Date(), DateFormat.YEAR_MONTH);
         return Config.CURRENT_MONTH_DATA_PATH_PRE + month;
     }
 
@@ -117,7 +114,7 @@ public class CommonUtils {
         List<String> workingDay = getWorkingDay();
         // 从小到大
         workingDay.sort(Comparator.naturalOrder());
-        String today = CommonUtils.formatDate(new Date());
+        String today = CommonUtils.formatDate(new Date(), DateFormat.YEAR_MONTH_DAY);
         int count = 0;
         for (String item : workingDay) {
             if (today.equals(item)) {
@@ -142,7 +139,7 @@ public class CommonUtils {
             return 0;
         }
         // TODO 工时计算
-        long todayStart = stringDateToTimestamp(dayTime.getDate());
+        long todayStart = stringDateToTimestamp(dayTime.getDate(), DateFormat.YEAR_MONTH_DAY);
         if (dayTime.getStartTime() == 0 || dayTime.getEndTime() == 0) {
             return 0;
         }
@@ -196,12 +193,22 @@ public class CommonUtils {
         return Date.from(instant);
     }
 
-    public static long stringDateToTimestamp(String date) {
+    public static long stringDateToTimestamp(String date, DateFormat dateFormat) {
         try {
-            return sdf.parse(date).getTime() / 1000;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat.getValue());
+            return simpleDateFormat.parse(date).getTime() / 1000;
         } catch (ParseException e) {
             System.out.println("parse error");
         }
         return 0;
+    }
+
+    /**
+     * 获取今天凌晨0点的时间戳
+     *
+     * @return 今天凌晨0点的时间戳
+     */
+    public static long getTodayStartTimestamp() {
+        return getTodayDate().getTime() / 1000;
     }
 }

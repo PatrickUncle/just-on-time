@@ -5,6 +5,7 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseMotionListener;
 import org.example.common.Config;
 import org.example.common.CommonUtils;
+import org.example.common.DateFormat;
 import org.example.model.DayTimeModel;
 
 import java.io.File;
@@ -61,7 +62,7 @@ public class JustOnTime implements NativeMouseMotionListener {
         for (DayTimeModel item : currentMonthData) {
             // 后续使用map
 
-            if (item.getDate().equals(CommonUtils.formatDate(CommonUtils.getTodayDate()))) {
+            if (item.getDate().equals(CommonUtils.formatDate(CommonUtils.getTodayDate(), DateFormat.YEAR_MONTH_DAY))) {
                 // 代表是今天
                 if (item.getStartTime() == 0) {
                     item.setStartTime(dayTimeModel.getStartTime());
@@ -76,6 +77,6 @@ public class JustOnTime implements NativeMouseMotionListener {
     }
 
     private String getToday() {
-        return CommonUtils.formatDate(CommonUtils.getTodayDate());
+        return CommonUtils.formatDate(CommonUtils.getTodayDate(), DateFormat.YEAR_MONTH_DAY);
     }
 }

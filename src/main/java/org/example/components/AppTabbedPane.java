@@ -1,5 +1,6 @@
 package org.example.components;
 
+import org.example.view.ConfigForm;
 import org.example.view.OverviewForm;
 
 import javax.swing.*;
@@ -24,7 +25,7 @@ public class AppTabbedPane extends JMenuBar {
         jTabbedPane = new JTabbedPane();
 
         jTabbedPane.addTab("概览", OverviewForm.getInstance().getMainPanel());
-//        jTabbedPane.addTab("考勤设置", panel2);
+        jTabbedPane.addTab("考勤设置", ConfigForm.getInstance().getMainPanel());
 //        jTabbedPane.addTab("系统设置", panel3);
 
         this.add(jTabbedPane);

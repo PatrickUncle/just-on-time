@@ -19,12 +19,13 @@ public class MyTimer {
                     CommonUtils.calculateHour(currentMonthData);
                     OverviewForm instance = OverviewForm.getInstance();
                     instance.updateInfo();
+                    instance.updateDateList();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         };
         Timer timer = new Timer();
-        timer.schedule(task, 0, 1000);
+        timer.schedule(task, 0, 1000 * 60);
     }
 }

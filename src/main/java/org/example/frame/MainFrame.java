@@ -1,6 +1,7 @@
 package org.example.frame;
 
 
+import com.formdev.flatlaf.FlatLightLaf;
 import org.example.components.AppTabbedPane;
 
 import javax.swing.*;
@@ -20,6 +21,13 @@ public class MainFrame extends JFrame {
     }
 
     private MainFrame() {
+        // FlatLightLaf主题
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+
         this.setTitle("按时下班");
         this.setName("按时下班");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

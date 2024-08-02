@@ -1,6 +1,5 @@
 package org.example.view;
 
-import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import org.example.common.Config;
 import org.example.model.OverviewDataModel;
@@ -25,13 +24,14 @@ public class OverviewForm {
     private JLabel workingHourLackLabel;
     private JLabel workingHourLackValue;
     private JLabel countingDayLabel;
-    private JLabel countingDayValue;
+    private JLabel countDays;
     private JLabel remainDayValue;
     private JLabel remainDayLabel;
     private JLabel adviceBackHomeTimeLabel;
     private JLabel adviceBackHomeTimeValue;
     private JScrollPane scrollPane;
     private JTable dateTable;
+    private JLabel countingEndTimeValue;
 
     public static OverviewForm getInstance() {
         if (overviewForm == null) {
@@ -47,7 +47,7 @@ public class OverviewForm {
         overviewForm.getWorkingHourOverValue().setText(overview.getOver() + "");
         overviewForm.getWorkingHourDayAvgValue().setText(overview.getAvg() + "");
         overviewForm.getWorkingHourLackValue().setText("所欠工时");
-        overviewForm.getCountingDayValue().setText(overview.getDayCount() + "");
+        overviewForm.getCountDays().setText(overview.getDayCount() + "");
         overviewForm.getRemainDayValue().setText(overview.getRemainDay() + "");
         overviewForm.getAdviceBackHomeTimeValue().setText("18:00");
     }

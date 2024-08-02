@@ -2,7 +2,6 @@ package org.example.view;
 
 import lombok.Getter;
 import org.example.common.CommonUtils;
-import org.example.common.Config;
 import org.example.common.DateFormat;
 import org.example.model.Rule;
 import org.example.model.StartEndPair;
@@ -19,10 +18,10 @@ public class ConfigForm {
     private JTable hourExcludeTable;
     private JButton addRule;
     private JButton deleteRule;
-    private JLabel earliestStart;
-    private JLabel latestEnd;
-    private JLabel reachDayAvgTime;
     private JButton basicParamSetButton;
+    private JTextField latestEnd;
+    private JTextField earliestStart;
+    private JTextField reachDayAvgTime;
 
     public static final Vector<String> excludeHourColumns = new Vector<>();
 

@@ -8,6 +8,8 @@ import org.example.model.StartEndPair;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -42,6 +44,7 @@ public class ConfigForm {
 
     private ConfigForm() {
         DefaultTableModel model = new DefaultTableModel(excludeHourColumns, 0);
+        this.basicParamSetButton.addActionListener(e -> saveParam());
         this.hourExcludeTable.setModel(model);
         this.updateConfig();
     }
@@ -69,5 +72,19 @@ public class ConfigForm {
 
     private String timestampToStringClockDate(long timestamp) {
         return CommonUtils.formatDate(new Date(timestamp), DateFormat.YEAR_MONTH_DAY_TIME);
+    }
+
+    private int stringToTimestampClockDate(String date) {
+        long todayStartTimestamp = CommonUtils.getTodayStartTimestamp();
+        long timestamp = CommonUtils.stringDateToTimestamp(date, DateFormat.YEAR_MONTH_DAY_TIME);
+        return (int) (timestamp - todayStartTimestamp);
+    }
+
+    private void saveParam() {
+        Rule rule = Rule.getInstance();
+        rule.setStart(stringToTimestampClockDate(this.earliestStart.getText()));
+        rule.setEnd(stringToTimestampClockDate(this.latestEnd.getText()));
+        rule.setDayAvgTime(Integer.parseInt(this.reachDayAvgTime.getText()));
+        rule.saveRuleToFile();
     }
 }

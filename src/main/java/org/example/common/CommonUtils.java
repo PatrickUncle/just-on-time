@@ -7,8 +7,10 @@ import org.example.model.OverviewDataModel;
 import org.example.model.Rule;
 import org.example.model.StartEndPair;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -210,5 +212,13 @@ public class CommonUtils {
      */
     public static long getTodayStartTimestamp() {
         return getTodayDate().getTime() / 1000;
+    }
+
+    public void saveRuleToFile() {
+        try (BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(Paths.get(Config.CONF_FILE_PATH)), StandardCharsets.UTF_8))) {
+            bf.write(com.alibaba.fastjson.JSON.toJSONString(Rule.getInstance()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

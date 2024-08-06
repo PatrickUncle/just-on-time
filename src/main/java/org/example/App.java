@@ -34,6 +34,11 @@ public class App {
             dataPath.mkdirs();
         }
 
+        File configDir = new File(Config.CONF_DIR_PATH);
+        if (!configDir.exists()) {
+            configDir.mkdirs();
+        }
+
         MainFrame mainFrame = MainFrame.getInstance();
 
         MyTimer.registerTimer();

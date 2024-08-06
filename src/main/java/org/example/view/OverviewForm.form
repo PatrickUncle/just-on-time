@@ -275,7 +275,9 @@
             <children>
               <component id="62862" class="javax.swing.JTable" binding="dateTable">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <preferredScrollableViewportSize width="450" height="300"/>
+                </properties>
               </component>
             </children>
           </scrollpane>

@@ -16,7 +16,7 @@ public class JustOnTimeController {
     public MyResult base() {
         return MyResult.
                 ok().
-                data(new OverviewDataModel());
+                data(OverviewDataModel.getInstance());
     }
 
     @GetMapping("config")

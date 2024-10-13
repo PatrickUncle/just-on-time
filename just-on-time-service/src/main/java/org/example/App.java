@@ -12,6 +12,7 @@ import org.example.frame.MainFrame;
 import org.example.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,31 +28,33 @@ public class App {
     private List<DayTimeModel> monthData;
 
     public static void main(String[] args) throws NativeHookException {
-        new SpringApplication(App.class).run(args);
+
+        SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(App.class);
+        springApplicationBuilder.headless(false).run(args);
 
 //        // TODO 实现导入工作日历
-//        File recordPath = new File(Config.RECORD_ROOT_PATH);
-//        if (!recordPath.exists()) {
-//            recordPath.mkdirs();
-//        }
-//
-//        File dataPath = new File(Config.DATA_PATH);
-//        if (!dataPath.exists()) {
-//            dataPath.mkdirs();
-//        }
-//
-//        File configDir = new File(Config.CONF_DIR_PATH);
-//        if (!configDir.exists()) {
-//            configDir.mkdirs();
-//        }
-//
-//        MainFrame mainFrame = MainFrame.getInstance();
-//
-//        MyTimer.registerTimer();
-//        GlobalScreen.setEventDispatcher(new SwingDispatchService());
-//        JustOnTime justOnTime = new JustOnTime();
-//        GlobalScreen.registerNativeHook();
-//        GlobalScreen.addNativeMouseMotionListener(justOnTime);
+        File recordPath = new File(Config.RECORD_ROOT_PATH);
+        if (!recordPath.exists()) {
+            recordPath.mkdirs();
+        }
+
+        File dataPath = new File(Config.DATA_PATH);
+        if (!dataPath.exists()) {
+            dataPath.mkdirs();
+        }
+
+        File configDir = new File(Config.CONF_DIR_PATH);
+        if (!configDir.exists()) {
+            configDir.mkdirs();
+        }
+
+        MainFrame mainFrame = MainFrame.getInstance();
+
+        MyTimer.registerTimer();
+        GlobalScreen.setEventDispatcher(new SwingDispatchService());
+        JustOnTime justOnTime = new JustOnTime();
+        GlobalScreen.registerNativeHook();
+        GlobalScreen.addNativeMouseMotionListener(justOnTime);
     }
 
     private void init() {

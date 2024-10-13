@@ -18,8 +18,6 @@ public class MyTimer {
                     List<DayTimeModel> currentMonthData = CommonUtils.getCurrentMonthData();
                     CommonUtils.calculateHour(currentMonthData);
                     OverviewForm instance = OverviewForm.getInstance();
-                    instance.updateInfo();
-                    instance.updateDateList();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

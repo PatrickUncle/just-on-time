@@ -1,8 +1,8 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
+  <el-table :data="excludeTimeList" style="width: 100%">
     <el-table-column label='序号' type="index" :index="indexMethod" />
-    <el-table-column label="开始时间" prop="startTime" />
-    <el-table-column label="结束时间" prop="endTime" />
+    <el-table-column label="开始时间" prop="start" />
+    <el-table-column label="结束时间" prop="end" />
     <el-table-column align="right">
       <template #header>
         <!-- Form -->
@@ -71,29 +71,11 @@ export default {
         startTime: null,
         endTime: null
       },
-      tableData: [
-        {
-          startTime: '2016-05-03',
-          endTime: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          startTime: '2016-05-02',
-          endTime: 'John',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          startTime: '2016-05-04',
-          endTime: 'Morgan',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          startTime: '2016-05-01',
-          endTime: 'Jessy',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ]
+      excludeTimeList: [ ]
     }
+  },
+  created() {
+    this.fetchExcludeTime()
   },
   methods: {
     handleEdit(index: number, row: User) {
@@ -107,7 +89,16 @@ export default {
     },
     addExcludeTimeRange() {
       this.dialogFormVisible = false
-    }
+    },
+    fetchExcludeTime() {
+            this.$http.get('http://localhost:54322/api/excludeTimeRange')
+            .then(response => {
+                this.excludeTimeList = response.data['data']
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
   }
 }
 

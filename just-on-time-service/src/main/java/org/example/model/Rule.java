@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Data
 public class Rule {
-    // 最早开始统计时间
+    // 最早开始统计时间 TODO 页面上用的是时间戳，后台用的是int
     private int start;
 
     // 不被包含进工时的时段

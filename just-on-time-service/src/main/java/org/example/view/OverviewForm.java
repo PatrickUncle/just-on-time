@@ -41,32 +41,10 @@ public class OverviewForm {
     }
 
     public void updateInfo() {
-        Rule rule = Rule.getInstance();
-        OverviewDataModel overview = OverviewDataModel.getInstance();
-        overviewForm.getWorkingHourTotalValue().setText(overview.getTotal() + "");
-        overviewForm.getWorkingHourOverValue().setText(overview.getOver() + "");
-        overviewForm.getWorkingHourDayAvgValue().setText(overview.getAvg() + "");
-        overviewForm.getWorkingHourLackValue().setText("所欠工时");
-        overviewForm.getCountDays().setText(overview.getDayCount() + "");
-        overviewForm.getRemainDayValue().setText(overview.getRemainDay() + "");
-        overviewForm.getAdviceBackHomeTimeValue().setText("18:00");
     }
 
     private OverviewForm() {
         DefaultTableModel model = new DefaultTableModel(Config.dateColumns, 0);
         this.dateTable.setModel(model);
     }
-
-    public void updateDateList() {
-        DefaultTableModel model = (DefaultTableModel) this.dateTable.getModel();
-        Vector<Vector<Object>> rowData = new Vector<>();
-        Vector<Object> row = new Vector<>();
-        row.add("2024-07-31");
-        row.add("2024-07-31 10:00");
-        row.add("2024-07-31 18:00");
-        rowData.add(row);
-        model.setDataVector(rowData, Config.dateColumns);
-    }
-
-
 }

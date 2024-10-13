@@ -10,9 +10,15 @@ public class OverviewDataModel {
 
     private double avg;
 
+    private double lack;
+
+    private String refreshTime;
+
     private int dayCount;
 
     private int remainDay;
+
+    private String adviceBackHomeTime;
 
     private static OverviewDataModel instance;
 

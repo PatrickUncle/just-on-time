@@ -1,6 +1,8 @@
 <script setup>
 import excludetable from './components/excludeTable.vue'
 import myDate from './components/myDate.vue'
+import overview from './components/overview.vue'
+
 </script>
 
 <template>
@@ -8,21 +10,7 @@ import myDate from './components/myDate.vue'
 
   <el-tabs type="border-card">
     <el-tab-pane label="工时预览">
-      <el-descriptions title="用户信息">
-        <el-descriptions-item label="总工时">180</el-descriptions-item>
-        <el-descriptions-item label="超出工时">10.00</el-descriptions-item>
-        <el-descriptions-item label="日均工时">9.00</el-descriptions-item>
-        <el-descriptions-item label="所欠工时">0.00</el-descriptions-item>
-        <el-descriptions-item label="统计天数">3</el-descriptions-item>
-        <el-descriptions-item label="统计刷新时间"
-          >2024-09-10</el-descriptions-item
-        >
-        <el-descriptions-item label="本月剩余工作日">20</el-descriptions-item>
-        <el-descriptions-item label="今日建议下班时间"
-          >18.00</el-descriptions-item
-        >
-      </el-descriptions>
-
+      <overview></overview>
       <el-card class="box-card">
         <myDate></myDate>
       </el-card>
@@ -32,18 +20,21 @@ import myDate from './components/myDate.vue'
         <div slot="header" class="clearfix">
           <span>基本考勤参数设置</span>
         </div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="审批人">
-            <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+        <el-form :inline="true" :model="baseParam" class="demo-form-inline">
+          <el-form-item label="最早工时统计时间" >
+            <el-time-select v-model="baseParam.startTime" :max-time="baseParam.endTime" class="mr-4" placeholder="Start time" start="00:00"
+              step="00:15" end="24:00" style="width: 200px" />
           </el-form-item>
-          <el-form-item label="活动区域">
-            <el-select v-model="formInline.region" placeholder="活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
+          <el-form-item label="最晚工时统计时间">
+            <el-time-select v-model="baseParam.endTime" :min-time="baseParam.startTime" placeholder="End time"  start="00:00"
+            step="00:15" end="24:00" style="width: 200px"/>
+          </el-form-item>
+
+          <el-form-item label="目标日均工时">
+            <el-input v-model="baseParam.target" placeholder="目标日均工时" style="width: 120px"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="onSubmit">保存参数并重新计算</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -51,8 +42,9 @@ import myDate from './components/myDate.vue'
         <div slot="header" class="clearfix">
           <span>工时排除范围管理</span>
         </div>
+        <excludetable></excludetable>
       </el-card>
-      <excludetable></excludetable>
+
     </el-tab-pane>
     <el-tab-pane label="系统设置"> </el-tab-pane>
   </el-tabs>
@@ -62,10 +54,11 @@ import myDate from './components/myDate.vue'
 export default {
   data() {
     return {
-      formInline: {
-        user: "",
-        region: "",
-      },
+      baseParam: {
+        startTime: null,
+        endTime: null,
+        target: 8
+      }
     };
   },
   methods: {

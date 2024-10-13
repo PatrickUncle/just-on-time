@@ -43,10 +43,7 @@ const dateMap =
 
 
 function isGreatDay(data) {
-    console.log(data.day)
-    console.log(dateMap)
     const item = dateMap[data.day]
-    console.log(item)
     return item != null && item['total'] > 50
 }
 
